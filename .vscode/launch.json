@@ -1,0 +1,88 @@
+{
+  // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+  // Pointez pour afficher la description des attributs existants.
+  // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "animation_test",
+      "cwd": "animation_test",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "animation_test (profile mode)",
+      "cwd": "animation_test",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "animation_test (release mode)",
+      "cwd": "animation_test",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "client",
+      "cwd": "client",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "client (profile mode)",
+      "cwd": "client",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "client (release mode)",
+      "cwd": "client",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "test_callbackfunction",
+      "cwd": "test_callbackfunction",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "test_callbackfunction (profile mode)",
+      "cwd": "test_callbackfunction",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "test_callbackfunction (release mode)",
+      "cwd": "test_callbackfunction",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "widget_test",
+      "cwd": "widget_test",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "widget_test (profile mode)",
+      "cwd": "widget_test",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "widget_test (release mode)",
+      "cwd": "widget_test",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}
