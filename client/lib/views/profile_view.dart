@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
-  static String routName = '/profile';
+  static const String routName = '/profile';
 
   @override
   Widget build(BuildContext context) {

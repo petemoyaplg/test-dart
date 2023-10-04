@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SingInView extends StatelessWidget {
   const SingInView({super.key});
 
-  static String routName = '/signin';
+  static const String routName = '/signin';
 
   @override
   Widget build(BuildContext context) {
