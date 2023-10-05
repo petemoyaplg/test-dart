@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+const mongoose = require( "mongoose" );
 const schema = mongoose.Schema;
-const activitySchema = require("./activity.model");
+const activitySchema = require( "./activity.model" );
 
-const tripSchema = schema({
+const tripSchema = schema( {
   city: { type: String, required: true },
-  activities: [activitySchema],
+  activities: [ activitySchema ],
   date: Date,
-});
+} );
 
-const Trip = mongoose.model("trip", tripSchema);
+const Trip = mongoose.model( "trip", tripSchema );
 
 module.exports = Trip;

@@ -1,24 +1,24 @@
 class SignUpForm {
   String password;
   String email;
-  String usename;
+  String username;
 
   SignUpForm({
     required this.password,
     required this.email,
-    required this.usename,
+    required this.username,
   });
 
   SignUpForm.fromJson(Map<String, dynamic> json)
       : password = json['password'],
         email = json['email'],
-        usename = json['usename'];
+        username = json['username'];
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> value = {
       'password': password,
       'email': email,
-      'usename': usename
+      'username': username
     };
     // if (id != null) {
     //   value['_id'] = id;

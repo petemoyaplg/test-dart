@@ -5,7 +5,11 @@ const app = express();
 const path = require( 'path' );
 const City = require( './models/city.model' );
 const Trip = require( './models/trip.model' );
+const User = require( './models/user.model' );
 const multer = require( 'multer' );
+const bcrypt = require( "bcrypt" );
+const jsonWebToken = require( 'jsonwebtoken' );
+const { JWT_SECRET } = require( './config/jwt.js' );
 const subpath = "/public/assets/images/activities";
 
 var storage = multer.diskStorage( {
@@ -114,6 +118,60 @@ app.post( "/api/activity/image", upload.single( 'activity' ), ( req, res, next )
     const publicPath = `http://10.0.2.2/public/asset/images/activities/${ req.filter.originalname }`;
     res.json( publicPath || "error" );
   } catch ( e ) {
+    next( e );
+  }
+} );
+
+app.post( "/api/user", async ( req, res, next ) => {
+  const body = req.body;
+  try {
+    await new User( {
+      username: body.username,
+      email: body.email,
+      password: bcrypt.hashSync( body.password, 10 ),
+    } ).save();
+    res.status( 200 ).end();
+  } catch ( e ) {
+    console.log( e );
+    next( e );
+  }
+} );
+
+app.post( "/api/auth", async ( req, res, next ) => {
+  const body = req.body;
+  try {
+    if ( !body.email || !body.password ) {
+      res.status( 400 ).json( 'missing email or password' );
+    } else {
+      const user = await User.findOne( { email: body.email }, '-__v', {} ).exec();
+      console.log( '====================================' );
+      console.log( user );
+      console.log( '====================================' );
+      const match = await bcrypt.compare( body.password, user.password );
+      console.log( '====================================' );
+      console.log( match );
+      console.log( '====================================' );
+      if ( !match ) {
+        res.status( 400 ).json( 'email ou mot de passe incorect' );
+      } else {
+        const token = jsonWebToken.sign(
+          {
+            sub: user._id.toString(),
+          },
+          JWT_SECRET,
+          {
+            expiresIn: '15min',
+            algorithm: 'HS256'
+          } );
+        if ( !token ) {
+          throw 'error token creation';
+        } else {
+          res.status( 200 ).json( { user, token } );
+        }
+      }
+    }
+  } catch ( e ) {
+    console.log( e );
     next( e );
   }
 } );

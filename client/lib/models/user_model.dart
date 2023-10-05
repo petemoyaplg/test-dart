@@ -1,18 +1,18 @@
 class User {
   String id;
   String email;
-  String usename;
+  String username;
 
   User({
     required this.id,
     required this.email,
-    required this.usename,
+    required this.username,
   });
 
   User.fromJson(Map<String, dynamic> json)
       : id = json['_id'],
         email = json['email'],
-        usename = json['usename'];
+        username = json['username'];
 }
 
 // enum ActivityStatus { ongoing, done }

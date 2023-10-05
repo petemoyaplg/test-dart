@@ -22,7 +22,7 @@ class _SingUpViewState extends State<SingUpView> {
 
   @override
   void initState() {
-    signUpForm = SignUpForm(password: '', email: '', usename: '');
+    signUpForm = SignUpForm(password: '', email: '', username: '');
     super.initState();
   }
 
@@ -33,8 +33,8 @@ class _SingUpViewState extends State<SingUpView> {
       form!.save();
       final error = await Provider.of<AuthProvider>(context, listen: false)
           .signup(signUpForm);
-      if (error == null) {
-        if (mounted) Navigator.pushNamed(context, SingInView.routName);
+      if (error == null && mounted) {
+        Navigator.pushNamed(context, SingInView.routName);
       }
     } else {}
   }
@@ -103,7 +103,7 @@ class _SingUpViewState extends State<SingUpView> {
                       ),
                       style: const TextStyle(color: Colors.white),
                       onSaved: (newValue) {
-                        signUpForm.usename = newValue!;
+                        signUpForm.username = newValue!;
                       },
                     ),
                     const Padding(padding: EdgeInsets.symmetric(vertical: 10)),

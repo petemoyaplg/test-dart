@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/auth_provider.dart';
+import 'providers/user_provide.dart';
 import 'views/auth/signup_view.dart';
 import 'views/home_view.dart';
 import 'views/profile_view.dart';
@@ -15,12 +16,16 @@ void main() {
 class MyAuth extends StatelessWidget {
   MyAuth({super.key});
   final AuthProvider authProvider = AuthProvider();
+  final UserProvider userProvider = UserProvider();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider.value(value: authProvider)],
+      providers: [
+        ChangeNotifierProvider.value(value: authProvider),
+        ChangeNotifierProvider.value(value: userProvider),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'My Auth',
