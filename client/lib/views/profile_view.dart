@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user_model.dart';
+import '../widgets/dyma_loader.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -13,7 +14,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context, listen: false).user;
+    final User? user = Provider.of<UserProvider>(context, listen: false).user;
     return Scaffold(
       appBar: AppBar(),
       drawer: Drawer(
@@ -21,22 +22,25 @@ class ProfileView extends StatelessWidget {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withOpacity(.5),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: Theme.of(context).primaryColor,
+                // gradient: LinearGradient(
+                //   colors: [
+                //     Theme.of(context).primaryColor,
+                //     Theme.of(context).primaryColor.withOpacity(.5),
+                //   ],
+                //   begin: Alignment.topLeft,
+                //   end: Alignment.bottomRight,
+                // ),
               ),
-              child: Text(
-                user.username,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                ),
-              ),
+              child: user != null
+                  ? Text(
+                      user.username,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                      ),
+                    )
+                  : const DymaLoader(),
             ),
             ListTile(
               tileColor: Theme.of(context).primaryColor,
@@ -55,7 +59,15 @@ class ProfileView extends StatelessWidget {
       ),
       body: Container(
         alignment: Alignment.center,
-        child: const Text('ProfileView !'),
+        child: user != null
+            ? Text(
+                user.username,
+                style: const TextStyle(
+                  fontSize: 80,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            : const DymaLoader(),
       ),
     );
   }

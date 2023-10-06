@@ -12,6 +12,9 @@ const jsonWebToken = require( 'jsonwebtoken' );
 const { JWT_SECRET } = require( './config/jwt.js' );
 const subpath = "/public/assets/images/activities";
 
+const extractUser = require( './middlewares/extractUser.js' );
+const moment = require( 'moment/moment' );
+
 var storage = multer.diskStorage( {
   destination: function ( req, file, cb ) {
     cb( null, path.join( __dirname, subpath ) );
@@ -144,13 +147,7 @@ app.post( "/api/auth", async ( req, res, next ) => {
       res.status( 400 ).json( 'missing email or password' );
     } else {
       const user = await User.findOne( { email: body.email }, '-__v', {} ).exec();
-      console.log( '====================================' );
-      console.log( user );
-      console.log( '====================================' );
       const match = await bcrypt.compare( body.password, user.password );
-      console.log( '====================================' );
-      console.log( match );
-      console.log( '====================================' );
       if ( !match ) {
         res.status( 400 ).json( 'email ou mot de passe incorect' );
       } else {
@@ -171,7 +168,45 @@ app.post( "/api/auth", async ( req, res, next ) => {
       }
     }
   } catch ( e ) {
-    console.log( e );
+    next( e );
+  }
+} );
+
+// http://10.0.2.2/api/user/current
+app.get( "/api/user/current", extractUser, ( req, res ) => {
+  res.status( 200 ).json( req.user );
+} );
+
+app.get( "api/auth/refresh-token", ( req, res, next ) => {
+  try {
+    const token = req.headers.authorization;
+    if ( token ) {
+      const jwtToken = token.split( ' ' )[ 1 ];
+      const jwtTokenDecoded = jsonWebToken.verify( jwtToken, JWT_SECRET, { ignoreExpiration: true } );
+
+      if ( jwtTokenDecoded && moment( jsonWebToken.exp * 1000 ) > moment().subtract( 7, 'd' ) ) {
+        const userId = jwtTokenDecoded.sub;
+        const newToken = jsonWebToken.sign(
+          {
+            sub: userId.toString(),
+          },
+          JWT_SECRET,
+          {
+            expiresIn: '15min',
+            algorithm: 'HS256'
+          } );
+        if ( !newToken ) {
+          throw 'error token creation';
+        } else {
+          res.status( 200 ).json( { token: newToken } );
+        }
+      } else {
+        res.json( 400 ).json( 'token not valide or too old' );
+      }
+    } else {
+      res.json( 400 ).json( 'no token' );
+    }
+  } catch ( error ) {
     next( e );
   }
 } );

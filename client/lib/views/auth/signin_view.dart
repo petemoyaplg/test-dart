@@ -19,6 +19,7 @@ class SingInView extends StatefulWidget {
 class _SingInViewState extends State<SingInView> {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   late SignInForm signInForm;
+  bool hidePassword = true;
 
   FormState? get form => key.currentState;
 
@@ -99,9 +100,25 @@ class _SingInViewState extends State<SingInView> {
                           style: TextStyle(color: Colors.white)),
                       const Padding(padding: EdgeInsets.symmetric(vertical: 3)),
                       TextFormField(
+                        obscureText: hidePassword,
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade900,
                           filled: true,
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hidePassword = !hidePassword;
+                                });
+                              },
+                              icon: hidePassword
+                                  ? const Icon(
+                                      Icons.visibility_off,
+                                      color: Colors.white,
+                                    )
+                                  : const Icon(
+                                      Icons.visibility,
+                                      color: Colors.white,
+                                    )),
                           border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),

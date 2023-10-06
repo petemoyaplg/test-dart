@@ -6,7 +6,7 @@ import 'auth/signup_view.dart';
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
-  static String routName = '/';
+  static const String routName = '/';
 
   @override
   Widget build(BuildContext context) {
